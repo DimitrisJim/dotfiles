@@ -1,0 +1,6 @@
+# Ignore python stuff
+__pycache__
+*.pyc
+
+# ignore vim stuff
+*.swp
