@@ -1,6 +1,8 @@
 ## dotfiles
 
-Collection of dotfiles. Prefer to put as many as possible inside the `.config` folder.w
+wip
+
+Collection of dotfiles. Currently has asus specific conf.  Prefer to put as many as possible inside the `.config` folder.
 
 TODO: Implement minimal functionality for setup.py to do it's thing.
 
