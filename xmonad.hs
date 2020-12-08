@@ -154,7 +154,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- restarting (with 'mod-q') to reset your layout state to the new
 -- defaults, as xmonad preserves your old layout settings by default.
 myLayout = spacingRaw True (Border 0 0 0 0) True (Border 10 6 6 6) True $
-           tiled ||| Full ||| spiral (6/7)  
+           tiled ||| Full  
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
