@@ -52,13 +52,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch firefox 
     , ((modm,               xK_f     ), spawn "firefox")
     -- launch thunar with <F1>
-    , ((0,                  0xffbe   ), spawn "thunar")
+    -- , ((0,                  0xffbe   ), spawn "thunar")
     -- launch thunderbird with <F2> 
-    , ((0,                  0xffbf   ), spawn "thunderbird")
+    -- , ((0,                  0xffbf   ), spawn "thunderbird")
     -- launch jupyter-qtconsole with <F4>
-    , ((0,                  0xffc1   ), spawn "$HOME/anaconda3/bin/jupyter-qtconsole")
+    -- , ((0,                  0xffc1   ), spawn "$HOME/anaconda3/bin/jupyter-qtconsole")
     -- launch youtube desktop with <F5>
-    , ((0,                  0xffc2   ), spawn "ytmda.AppImage")
+    -- , ((0,                  0xffc2   ), spawn "ytmda.AppImage")
 
     -- launch dmenu
     , ((modm,               xK_p     ), spawn "dmenu_run")
@@ -128,10 +128,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ++
 
     -- Add keys for volume control. (F9, F10, F11) (0 indicates no need for modm)
-    [((0,     0xffc6), spawn "amixer set Master toggle"),
-     ((0,     0xffc7), spawn "amixer -q sset Master 2%-"),
-     ((0,     0xffc8), spawn "amixer -q sset Master 2%+")
-    ]
+    -- [((0,     0xffc6), spawn "amixer set Master toggle"),
+    --  ((0,     0xffc7), spawn "amixer -q sset Master 2%-"),
+    --  ((0,     0xffc8), spawn "amixer -q sset Master 2%+")
+    -- ]
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -154,7 +154,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- restarting (with 'mod-q') to reset your layout state to the new
 -- defaults, as xmonad preserves your old layout settings by default.
 myLayout = spacingRaw True (Border 0 0 0 0) True (Border 10 6 6 6) True $
-           tiled ||| Full ||| spiral (7/8) 
+           tiled ||| Full 
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -209,7 +209,6 @@ myEventHook = mempty
 myLogHook = do
         spawnOnce "nitrogen --restore &"
         spawnOnce "compton &"
-        spawnOnce "xrandr --output HDMI-2 --auto --left-of eDP-1"
         fadeInactiveLogHook fadeAmount
         where fadeAmount = 0.88
 
