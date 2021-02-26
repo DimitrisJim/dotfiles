@@ -1,7 +1,4 @@
-""" Configuration file for jupyter-qtconsole.
-
-
-"""
+""" Configuration file for jupyter-qtconsole."""
 
 # Set to display confirmation dialog on exit. You can always use 'exit' or
 # 'quit', to force a direct exit without any confirmation.
@@ -46,4 +43,4 @@ c.ConsoleWidget.scrollbar_visibility = False
 
 # If not empty, use this Pygments style for syntax highlighting. Otherwise, the
 # style sheet is queried for Pygments style information.
-c.JupyterWidget.syntax_style = 'stata-dark'
+c.JupyterWidget.syntax_style = 'monokai'

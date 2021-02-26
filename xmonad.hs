@@ -39,7 +39,7 @@ myFocusedBorderColor = "#013ADF"
 myModMask       = mod4Mask
 
 -- The default number of workspaces, I'll mostly use 2.
-myWorkspaces    = ["1","2","3","4","5","6"]
+myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
