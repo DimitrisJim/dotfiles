@@ -1,10 +1,9 @@
 -- XMonad Conf 
--- See /usr/share/doc/xmonad-core/xmonad.hs for default settings.
+
 import XMonad
 import Data.Monoid
 import System.Exit
 
--- Utilities
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
@@ -19,10 +18,11 @@ import XMonad.Layout.Spiral
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
--- Use Alacritty as preferred terminal program.
+-- The preferred terminal program, which is used in a binding below and by
+-- certain contrib modules.
 myTerminal      = "alacritty"
 
--- Use focus follows the mouse pointer.
+-- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 
@@ -30,87 +30,111 @@ myFocusFollowsMouse = True
 myClickJustFocuses :: Bool
 myClickJustFocuses = False
 
--- Width of the window border in pixels and colors for unfocused/focused windows.
-myBorderWidth   = 0
-myNormalBorderColor  = "#2E2E2E"
-myFocusedBorderColor = "#013ADF"
+-- Width of the window border in pixels.
+myBorderWidth   = 1
 
 -- Use "windows key" as modKey.
 myModMask       = mod4Mask
 
--- The default number of workspaces, I'll mostly use 2.
+-- The default number of workspaces (virtual screens) and their names.
+-- By default we use numeric strings, but any string may be used as a
+-- workspace name. The number of workspaces is determined by the length
+-- of this list.
+--
+-- A tagging example:
+--
+-- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 myWorkspaces    = ["1","2","3","4","5","6"]
+
+-- Border colors for unfocused and focused windows, respectively.
+--
+myNormalBorderColor  = "#2E2E2E"
+myFocusedBorderColor = "#FFFFFF"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    -- Launchers:
-    --
+
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+
     -- launch firefox 
     , ((modm,               xK_f     ), spawn "firefox")
-    -- launch thunar with <F1>
-    , ((0,                  0xffbe   ), spawn "thunar")
-    -- launch thunderbird with <F2> 
-    , ((0,                  0xffbf   ), spawn "thunderbird")
-    -- launch jupyter-qtconsole with <F4>
-    , ((0,                  0xffc1   ), spawn "$HOME/anaconda3/bin/jupyter-qtconsole")
-    -- launch youtube desktop with <F5>
-    , ((0,                  0xffc2   ), spawn "ytmda.AppImage")
 
     -- launch dmenu
     , ((modm,               xK_p     ), spawn "dmenu_run")
+
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
-    
-    -- Window and Layout Keybindings:
-    --
-    -- close focused window (Re-map to modm + c)
+
+    -- close focused window (Remap to modm + c)
     , ((modm,               xK_c     ), kill)
+
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
+
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+
     -- Resize viewed windows to the correct size
     , ((modm,               xK_n     ), refresh)
+
     -- Move focus to the next window
     , ((modm,               xK_Tab   ), windows W.focusDown)
+
     -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
+
     -- Move focus to the previous window
     , ((modm,               xK_k     ), windows W.focusUp  )
+
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
+
     -- Swap the focused window and the master window
     , ((modm,               xK_Return), windows W.swapMaster)
+
     -- Swap the focused window with the next window
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+
     -- Swap the focused window with the previous window
     , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+
     -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
+
     -- Expand the master area
     , ((modm,               xK_l     ), sendMessage Expand)
+
     -- Push window back into tiling
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+
     -- Increment the number of windows in the master area
     , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
-    -- Help and Quit:
+    -- Toggle the status bar gap
+    -- Use this binding with avoidStruts from Hooks.ManageDocks.
+    -- See also the statusBar function from Hooks.DynamicLog.
     --
+
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
+    
+     -- , ((modm, xK_s .|. xK_space), sendMessage ToggleStruts)
     ]
     ++
 
+    --
     -- mod-[1..9], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
     --
@@ -119,6 +143,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
 
+    --
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
     --
@@ -127,7 +152,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
     ++
 
-    -- Add keys for volume control. (F9, F10, F11) (0 indicates no need for modm)
+    -- Add keys for volume control. (F9, F10, F11)
     [((0,     0xffc6), spawn "amixer set Master toggle"),
      ((0,     0xffc7), spawn "amixer -q sset Master 2%-"),
      ((0,     0xffc8), spawn "amixer -q sset Master 2%+")
@@ -141,11 +166,15 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-button1, Set the window to floating mode and move by dragging
     [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
                                        >> windows W.shiftMaster))
+
     -- mod-button2, Raise the window to the top of the stack
     , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
+
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
                                        >> windows W.shiftMaster))
+
+    -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
 ------------------------------------------------------------------------
@@ -205,13 +234,12 @@ myEventHook = mempty
 -- 1) Set up nitrogen to show background.
 -- 2) Compton takes care of window opacities.
 -- 3) Make external display be left of main display.
--- 4) Make inactive windows more translucent (requires xcompmgr from xapps)
 myLogHook = do
         spawnOnce "nitrogen --restore &"
         spawnOnce "compton &"
-        spawnOnce "xrandr --output HDMI-2 --auto --left-of eDP-1"
+        spawnOnce "xrandr --output DP-1-0.8 --auto --primary --output DP-1-0.1 --left-of DP-1-0.8 --output eDP --right-of DP-1-0.8"
         fadeInactiveLogHook fadeAmount
-        where fadeAmount = 0.88
+        where fadeAmount = 0.95
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -234,8 +262,11 @@ main = do
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
 -- use the defaults defined in xmonad/XMonad/Config.hs
+--
+-- No need to modify this.
+--
 defaults = def {
-        -- simple stuff
+      -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
         clickJustFocuses   = myClickJustFocuses,
@@ -245,11 +276,11 @@ defaults = def {
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
 
-        -- key bindings
+      -- key bindings
         keys               = myKeys,
         mouseBindings      = myMouseBindings,
 
-        -- hooks, layouts
+      -- hooks, layouts
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,

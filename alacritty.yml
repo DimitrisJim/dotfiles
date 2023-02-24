@@ -6,8 +6,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 4
-    y: 4
+    x: 6
+    y: 6
 
   # Window decorations
   #
@@ -19,6 +19,12 @@ window:
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background, but no title bar buttons
   decorations: none 
+
+  # Background opacity
+  #
+  # Window opacity as a floating point number from `0.0` to `1.0`.
+  # The value `0.0` is completely transparent and `1.0` is opaque.
+  opacity: 0.8
 
   # Window title
   #title: Alacritty
@@ -44,53 +50,43 @@ font:
     family: monospace
 
   # Point size
-  size: 13.0
+  size: 11.0
 
 # Colours 
-# Base16 Horizon Dark - alacritty color config
-# Michaël Ball (http://github.com/michael-ball/)
 colors:
   # Default colors
   primary:
-    background: '0x000000'
-    foreground: '0xcbced0'
+    background: '0x171d23'
+    foreground: '0xffffff'
 
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  # Colors the cursor will use if `custom_cursor_colors` is true
+  # Cursor colors
   cursor:
-    text: '0x0b1c2c'
-    cursor: '0xcbd6e2'
+    text:   '0xfafafa'
+    cursor: '0x008b94'
 
   # Normal colors
   normal:
-    black:   '0x0b1c2c'
-    red:     '0xbf8b56'
-    green:   '0x56bf8b'
-    yellow:  '0x8bbf56'
-    blue:    '0x8b56bf'
-    magenta: '0xbf568b'
-    cyan:    '0x568bbf'
-    white:   '0xcbd6e2'
+    black:   '0x333f4a'
+    red:     '0xd95468'
+    green:   '0x8bd49c'
+    blue:    '0x539afc'
+    magenta: '0xb62d65'
+    cyan:    '0x70e1e8'
+    white:   '0xb7c5d3'
 
   # Bright colors
   bright:
-    black:   '0x627e99'
-    red:     '0xbfbf56'
-    green:   '0x223b54'
-    yellow:  '0x405c79'
-    blue:    '0xaabcce'
-    magenta: '0xe5ebf1'
-    cyan:    '0xbf5656'
-    white:   '0xf7f9fb'
+    black:   '0x41505e'
+    red:     '0xd95468'
+    green:   '0x8bd49c'
+    yellow:  '0xebbf83'
+    blue:    '0x5ec4ff'
+    magenta: '0xe27e8d'
+    cyan:    '0x70e1e8'
+    white:   '0xffffff'
 
 draw_bold_text_with_bright_colors: false
   
-# Background opacity
-#
-# Window opacity as a floating point number from `0.0` to `1.0`.
-# The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.9
-
 #cursor:
   # Cursor style
   #
@@ -115,7 +111,7 @@ mouse:
   # If this is `true`, the cursor is temporarily hidden when typing.
   #hide_when_typing: false
 
-  url:
+  hints:
     # URL launcher
     #
     # This program is executed when clicking on a text which is recognized as a URL.
